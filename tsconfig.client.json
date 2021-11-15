@@ -1,5 +1,5 @@
 {
-  "include":["./src/**/*.ts", "./src/**/*.tsx"],
+  "include":["./src/client/**/*.ts", "./src/client/**/*.tsx", "./src/game/**/*.ts", "./src/game/**/*.tsx"],
   "compilerOptions": {
     /* Language and Environment */
     "target": "es5",                                     
@@ -12,7 +12,7 @@
     "moduleResolution": "node",                          
    
     /* Emit */
-    "outDir": "build",                                   
+    "outDir": "build/client",                                   
 
     /* Interop Constraints */
     "esModuleInterop": true,                             
