@@ -1,5 +1,5 @@
 {
-  "include":["./src/server/**/*.ts", "./src/server/**/*.tsx", "./src/game/**/*.ts", "./src/game/**/*.tsx"],
+  "include":["./src/*.ts", "./src/*.tsx", "./src/game/**/*.ts", "./src/game/**/*.tsx"],
   "compilerOptions": {
     /* Language and Environment */
     "target": "es5",                                     

@@ -5,11 +5,13 @@ import { Board } from './Board';
 import { useState } from 'react';
 import 'react';
 
+console.log(window.location.hostname);
+const HOST = window.location.hostname === 'localhost' ? 'localhost:8000' : window.location.hostname;
 
 const GameClient = Client({ 
     game: TicTacToe, 
     board: Board,
-    multiplayer: SocketIO({ server: 'localhost:8000' }),
+    multiplayer: SocketIO({ server: HOST }),
  });
 
 export const App = () => {
