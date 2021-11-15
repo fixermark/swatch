@@ -1,5 +1,6 @@
+import { Debug } from 'boardgame.io/debug';
 import { Client } from 'boardgame.io/react';
-import {SocketIO} from 'boardgame.io/multiplayer';
+import { SocketIO } from 'boardgame.io/multiplayer';
 import { TicTacToe } from '../game/Game';
 import { Board } from './Board';
 import { useState } from 'react';
@@ -12,6 +13,7 @@ const GameClient = Client({
     game: TicTacToe, 
     board: Board,
     multiplayer: SocketIO({ server: HOST }),
+    debug: { impl: Debug },
  });
 
 export const App = () => {
