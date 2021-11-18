@@ -9,7 +9,7 @@ const getWinner = (ctx: Ctx): string | null => {
   return `Player ${ctx.gameover.winner} wins!`;
 };
 
-export const Board = ({ G, ctx, moves, playerID, matchData }: BoardProps<SwatchState>) => {
+export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps<SwatchState>) => {
   console.log(`playerID: ${playerID}, matchData: ${JSON.stringify(matchData)}`);
 
   return (
@@ -29,6 +29,8 @@ export const Board = ({ G, ctx, moves, playerID, matchData }: BoardProps<SwatchS
         }
         
       </div>
+      <div>Color: {G.targetColorName}</div>
+      <button onClick={() => moves.chooseColor({r: 0, g: 255, b: 0})}>Choose color</button>
     </main>
   );
 };

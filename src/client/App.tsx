@@ -10,18 +10,12 @@ console.log(window.location.hostname);
 const HOST = window.location.hostname === 'localhost' ? 'localhost:8000' : window.location.hostname;
 const SERVER_URI = window.location.hostname === 'localhost' ? 'http://localhost:8000' : `http://${window.location.hostname}`;
 
-const GameClient = Client({ 
-    game: Swatch, 
-    board: Board,
-    multiplayer: SocketIO({ server: HOST }),
-    debug: { impl: Debug },
- });
-
 export const App = () => {
     const [playerId, setPlayerId] = useState<string|null>(null);
 
     // TODO: we may want to check state here and if we already know our player ID etc. just hop in the game?
     return <Lobby
+        debug={{impl: Debug}}
         gameServer={SERVER_URI}
         lobbyServer={SERVER_URI}
         gameComponents={[
