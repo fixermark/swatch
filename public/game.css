@@ -1,0 +1,7 @@
+.hidden {
+    display: none;
+}
+
+.thisPlayer {
+    font-weight: bold;
+}

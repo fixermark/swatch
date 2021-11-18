@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  devtool: 'source-map',
   entry: './src/client/index.tsx',
   module: {
     rules: [
@@ -15,6 +16,9 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  optimization: {
+    minimize: false,
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],

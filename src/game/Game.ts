@@ -1,44 +1,44 @@
 import { Game } from 'boardgame.io';
-import { INVALID_MOVE } from 'boardgame.io/core';
+import { INVALID_MOVE, PlayerView } from 'boardgame.io/core';
+import { Color } from './Color';
 
-export interface TicTacToeState {
-  cells: (null | string)[];
+/**
+ * Private state associated with each player
+ */
+export interface PrivatePlayerState {
+  selectedColor: Color | undefined,
+};
+
+export interface SwatchState {
+  // Everything in this field is hidden by PlayerView.STRIP_SECRETS
+  secret?: {
+    targetColor: Color,
+  },
+  // All keys except current player are hidden by PlayerView.STRIP_SECRETS
+  players: {[key: string]: PrivatePlayerState},
 }
 
-export const TicTacToe: Game<TicTacToeState> = {
-  setup: () => ({ cells: Array(9).fill(null) }),
+export const Swatch: Game<SwatchState> = {
+  name: 'swatch',
+  // automatically limit player state by stripping 'secret' and all 'player.id' but the current player
+  playerView: PlayerView.STRIP_SECRETS,
+  setup: () => ({players: {}}),
 
   turn: {
     moveLimit: 1,
   },
 
   moves: {
-    clickCell: (G, ctx, id) => {
-      if (G.cells[id] !== null) {
-        return INVALID_MOVE;
-      }
-      G.cells[id] = ctx.currentPlayer;
+    chooseColor: (G, ctx, id, color: Color) => {
     },
   },
 
   endIf: (G, ctx) => {
-    if (IsVictory(G.cells)) {
-      return { winner: ctx.currentPlayer };
-    }
-    if (IsDraw(G.cells)) {
-      return { draw: true };
-    }
   },
 
   ai: {
     enumerate: (G, ctx) => {
-      let moves = [];
-      for (let i = 0; i < 9; i++) {
-        if (G.cells[i] === null) {
-          moves.push({ move: 'clickCell', args: [i] });
-        }
-      }
-      return moves;
+      return [{move: 'chooseColor'}];
     },
   },
 };

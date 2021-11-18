@@ -1,10 +1,10 @@
 import { Server, Origins } from 'boardgame.io/server';
 import path from 'path';
 import serve from 'koa-static';
-import { TicTacToe } from './game/Game';
+import { Swatch } from './game/Game';
 
 const server = Server({
-     games: [TicTacToe],
+     games: [Swatch],
      origins: [
          'http://swatch-dev.fixermark.com',
          'http://swatch.fixermark.com',

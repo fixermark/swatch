@@ -28,6 +28,10 @@
     return value < 0 || value > 255 || isNaN(value) ? undefined : value;
  }
 
+function noUndefinedValues<T>(array: Array<T | undefined>): array is Array<T> {
+    return !array.some((x) => x === undefined);
+}
+
  /**
   * Function to convert a ColorCode to the corresponding color
   * 
@@ -43,9 +47,10 @@ export function codeToColor(color: ColorCode): Color | undefined {
 
    const colorValues = colorParts.map((hexcode) => hexToValue(hexcode));
 
-   if (colorValues.some((val) => val === undefined)) {
+   if (!noUndefinedValues(colorValues)) {
        return undefined;
    }
+   
    return {
        r: colorValues[0],
        g: colorValues[1],
