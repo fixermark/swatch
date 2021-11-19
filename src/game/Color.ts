@@ -68,7 +68,8 @@ export function codeToColor(color: ColorCode): Color | undefined {
   */
  export function colorToCode(color: Color): ColorCode {
     const colorValues = [color.r, color.g, color.b];
-    const colorParts = colorValues.map((value) => value.toString(16));
+    const colorParts = colorValues.map((value) => value.toString(16))
+    .map((stringPiece) => stringPiece.length < 2 ? `0${stringPiece}` : stringPiece);
     return colorParts.join('');
  }
 

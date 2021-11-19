@@ -5,3 +5,9 @@
 .thisPlayer {
     font-weight: bold;
 }
+
+.colorbox {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
