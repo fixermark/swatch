@@ -39,18 +39,20 @@ function noUndefinedValues<T>(array: Array<T | undefined>): array is Array<T> {
   * @return Converted color, or undefined if the ColorCode could not convert to a valid color
   */
 export function codeToColor(color: ColorCode): Color | undefined {
+  console.log(`encoding ${color}`);
    if (color.length !== 6) {
+     console.log('bailing, could not encode');
        return undefined;
    }
 
-   const colorParts = [color.slice(0,2), color.slice(2,2), color.slice(4,2)];
+   const colorParts = [color.slice(0,2), color.slice(2,4), color.slice(4)];
 
    const colorValues = colorParts.map((hexcode) => hexToValue(hexcode));
 
    if (!noUndefinedValues(colorValues)) {
        return undefined;
    }
-   
+
    return {
        r: colorValues[0],
        g: colorValues[1],
@@ -68,4 +70,13 @@ export function codeToColor(color: ColorCode): Color | undefined {
     const colorValues = [color.r, color.g, color.b];
     const colorParts = colorValues.map((value) => value.toString(16));
     return colorParts.join('');
+ }
+
+ /**
+  * Computes a distance metric between two colors, where higher values are more different.
+  * @param first first color
+  * @param second second color
+  */
+ export function distance(first: Color, second: Color): number {
+    return Math.abs(first.r - second.r) + Math.abs(first.g - second.g) + Math.abs(first.b - second.b);
  }

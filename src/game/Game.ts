@@ -1,6 +1,6 @@
 import { Game, PlayerID } from 'boardgame.io';
 import { INVALID_MOVE, PlayerView } from 'boardgame.io/core';
-import { Color } from './Color';
+import { Color, distance } from './Color';
 import { selectColor } from './ColorSelector';
 
 /**
@@ -10,17 +10,115 @@ export interface PrivatePlayerState {
   selectedColor: Color | undefined,
 };
 
+interface PlayerGuesses {
+  [key: PlayerID]: {
+    guess: Color;
+  };
+}
+
+/**
+ * State encoding the previous round of play
+ */
+export interface PreviousRoundState {
+  guessColorShade?: {
+    colorName: string;
+    colorValue: Color;
+    players: PlayerGuesses;
+  };
+}
+
 export interface SwatchState {
   // Everything in this field is hidden by PlayerView.STRIP_SECRETS
   secret?: {
     targetColor: Color,
-  },
-  targetColorName: string,
+  };
+  targetColorName: string;
   // All keys except current player are hidden by PlayerView.STRIP_SECRETS
-  players: {[key: string]: PrivatePlayerState},
-  scores: {[key: PlayerID]: number},
+  players: {[key: PlayerID]: PrivatePlayerState};
+  scores: {[key: PlayerID]: number};
+  previousRound?: PreviousRoundState;
+  previousFirsts: PlayerID[];
+  previousSeconds: PlayerID[];
 }
 
+/**
+ * Update the scores. INVARIANT: Assumes all players have a guess logged
+ * @param state Game state
+ */
+function updateScores(state: SwatchState) {
+  if (state.secret === undefined) {
+    return;
+  }
+  const secret = state.secret;
+
+  const playerDistances = Object.keys(state.players).map((id) => ({
+    id: id,
+    distance: distance(secret.targetColor, state.players[id].selectedColor!),
+  }));
+
+  playerDistances.sort((a, b) => a.distance - b.distance);
+  
+  const places = playerDistances.slice(1).reduce((collection, current) => {
+    const match = collection[collection.length - 1][0].distance;
+    if (current.distance === match) {
+      collection[collection.length - 1].push(current);
+    } else {
+      collection.push([current]);
+    }
+    return collection;
+  }, [[playerDistances[0]]]);
+
+  for (const firsts of places[0]) {
+    state.scores[firsts.id] += 2;
+  }
+  state.previousFirsts = places[0].map((place) => place.id);
+  state.previousSeconds = [];
+
+  if (places.length > 1) {
+    for (const seconds of places[1]) {
+      state.scores[seconds.id] += 1;
+    }
+    state.previousSeconds = places[1].map((place) => place.id);
+  }
+}
+
+/**
+ * Copies state from current round into previous round register
+ * 
+ * Invariant: Every player has guessed a color
+ * 
+ * @param state Game state
+ */
+function currentRoundToPreviousRound(state: SwatchState) {
+  // Only need to do this on server
+  if (!state.secret) {
+    return;
+  }
+
+  const previousPlayerGuesses: PlayerGuesses = {};
+
+  for (const id of Object.keys(state.players)) {
+    previousPlayerGuesses[id] = {
+      guess: state.players[id].selectedColor!,
+    };
+  }
+
+  const previousRound = {
+    guessColorShade: {
+      colorName: state.targetColorName,
+      colorValue: state.secret.targetColor,
+      players: previousPlayerGuesses,
+    },
+  };
+
+  state.previousRound = previousRound;
+}
+
+/**
+ * Resets all player guesses
+ * 
+ * @param state Game state
+ */
 function wipePlayerGuesses(state: SwatchState) {
   for (const playerId of Object.keys(state.players)) {
     state.players[playerId].selectedColor = undefined;
@@ -35,7 +133,12 @@ export const Swatch: Game<SwatchState> = {
     const result: SwatchState = {
       players: {},
       scores: {},
+      secret: {
+        targetColor: {r: 0, g: 0, b: 0},
+      },
       targetColorName: 'Selecting color...',
+      previousFirsts: [],
+      previousSeconds: [],
     };
 
     for (const playerId of ctx.playOrder) {
@@ -49,40 +152,42 @@ export const Swatch: Game<SwatchState> = {
       throw new Error('Context did not have a random number generator!');
     }
 
-    const selectedColor = selectColor(ctx.random);
-
-    if (selectedColor) {
-      result.secret = {
-        targetColor: selectedColor.color,
-      };
-      result.targetColorName = selectedColor.name;
-    }
-
-
     return result;
   },
 
   turn: {
     activePlayers: {all: 'chooseColor', minMoves: 1, maxMoves: 1},
     onBegin: (G, ctx) => {
-      if (!ctx.events) {
-        throw new Error('events API missing');
+      console.log('beginning');
+      if (!G.secret || !ctx.random) {
+        return;
+      }
+      console.log('selecting color...');
+      const selectedColor = selectColor(ctx.random);
+      if (selectedColor) {
+        G.secret.targetColor = selectedColor.color;
+        G.targetColorName = selectedColor.name;
       }
     },
 
     onEnd: (G, ctx) => {
-      // TODO: here, we will check proximity of colors and adjust scores
       console.log('turn end!');
-      // TODO: We should also pick the next color and move previous color, color name, and guesses to a prevRound data structure
+
+      updateScores(G);
+      currentRoundToPreviousRound(G);
+      wipePlayerGuesses(G);
     },
 
     stages: {
       chooseColor: {
         moves: { 
           chooseColor: (G, ctx, color: Color) => {
+            console.log(`chosen color is ${JSON.stringify(color)}`);
             if (!ctx.playerID) {
+              console.error('no player ID?');
               return;
             }
+            console.log(`recording color for ${ctx.playerID}`);
 
             G.players[ctx.playerID].selectedColor = color;
             if (!ctx.events) {
@@ -104,3 +209,4 @@ export const Swatch: Game<SwatchState> = {
   // endIf: (G, ctx) => {
   // },
 };
+

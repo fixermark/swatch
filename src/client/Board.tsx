@@ -2,6 +2,7 @@ import React from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { SwatchState } from '../game/Game';
 import { Ctx } from 'boardgame.io';
+import { codeToColor } from '../game/Color';
 
 const getWinner = (ctx: Ctx): string | null => {
   if (!ctx.gameover) return null;
@@ -10,7 +11,7 @@ const getWinner = (ctx: Ctx): string | null => {
 };
 
 export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps<SwatchState>) => {
-  console.log(`playerID: ${playerID}, matchData: ${JSON.stringify(matchData)}`);
+  const [selectedColor, setSelectedColor] = React.useState<string>('#000000');
 
   return (
     <main>
@@ -27,10 +28,10 @@ export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps
           </li>
           )
         }
-        
       </div>
       <div>Color: {G.targetColorName}</div>
-      <button onClick={() => moves.chooseColor({r: 0, g: 255, b: 0})}>Choose color</button>
+      <input type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}/>
+      <button onClick={() => moves.chooseColor(codeToColor(selectedColor.slice(1)))}>Choose color</button>
     </main>
   );
 };
