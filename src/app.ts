@@ -1,9 +1,13 @@
-import { Server, Origins } from 'boardgame.io/server';
+import { FlatFile, Server, Origins } from 'boardgame.io/server';
 import path from 'path';
 import serve from 'koa-static';
 import { Swatch } from './game/Game';
 
 const server = Server({
+    db: new FlatFile({
+        dir: 'storage',
+        logging: true,
+    }),
      games: [Swatch],
      origins: [
          'http://swatch-dev.fixermark.com',
