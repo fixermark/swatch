@@ -24,7 +24,7 @@ const ALL_COLORS: ColorRow[] | undefined = initColors();
 function findColorFile(fs: any, path:any): string {
     const possibleLocations = [
         path.resolve(__dirname, '../../private/colors.json'),
-        path.resolve(__dirname, 'private/colors.json'),
+        path.resolve(__dirname, '../private/colors.json'),
     ];
 
     for (const location of possibleLocations) {
