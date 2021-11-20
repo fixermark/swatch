@@ -16,24 +16,29 @@ export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps
   const [selectedColor, setSelectedColor] = React.useState<string>('#000000');
 
   return (
-    <main>
+    <main className="gameview">
       <h1>Swatch</h1>
 
-      <div>
-        Players:
+      <div className="playerScoresSection">
+        <div>Scores:</div>
+        <div className="playerScores">
         {
-          matchData && matchData.map(({id, name}) => 
-          <li key={id}>
+          matchData && matchData.map(({id}) => 
+          <div key={id}>
             <span className={playerID && id === parseInt(playerID, 10) ? 'thisPlayer' : ''}>
               {nameForPlayerId(id.toString(), matchData)}: {scoreForPlayer(id.toString(), G)}
             </span>
-          </li>
+          </div>
           )
         }
+        </div>
       </div>
-      <div>Color: {G.targetColorName}</div>
-      <input type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}/>
-      <button onClick={() => moves.chooseColor(codeToColor(selectedColor.slice(1)))}>Choose color</button>
+      <div className="gameview">
+        <div className="direction">Guess the color for</div>
+        <div className="colorname">{G.targetColorName}</div>
+        <div><input className="guesscolor" type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}/></div>
+        <div><button className="guessbutton" onClick={() => moves.chooseColor(codeToColor(selectedColor.slice(1)))}>Choose color</button></div>
+      </div>
       {matchData && <LastRound gameState={G} context={ctx} matchData={matchData} />}
     </main>
   );
