@@ -39,9 +39,8 @@ function noUndefinedValues<T>(array: Array<T | undefined>): array is Array<T> {
   * @return Converted color, or undefined if the ColorCode could not convert to a valid color
   */
 export function codeToColor(color: ColorCode): Color | undefined {
-  console.log(`encoding ${color}`);
    if (color.length !== 6) {
-     console.log('bailing, could not encode');
+     console.log(`bailing, could not encode ${color}`);
        return undefined;
    }
 

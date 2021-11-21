@@ -13,7 +13,7 @@ export interface PrivatePlayerState {
 /**
  * Description of final game state
  */
-interface GameOver {
+export interface EndGameState {
   winners: PlayerID[];
   scores: {[key: PlayerID]: number};
 }
@@ -97,7 +97,7 @@ function updateScores(state: SwatchState) {
  * 
  * @param state Game state. Invariant: at least one player score is over winning score
  */
-function computeGameOver(state: SwatchState): GameOver {
+function computeGameOver(state: SwatchState): EndGameState {
   const passingScores = Object.keys(state.scores).map(
     (key) => ({score: state.scores[key], key: key}))
   .sort((a, b) => a.score - b.score)
@@ -189,11 +189,9 @@ export const Swatch: Game<SwatchState> = {
   turn: {
     activePlayers: {all: 'chooseColor', minMoves: 1, maxMoves: 1},
     onBegin: (G, ctx) => {
-      console.log('beginning');
       if (!G.secret || !ctx.random) {
         return;
       }
-      console.log('selecting color...');
       const selectedColor = selectColor(ctx.random);
       if (selectedColor) {
         G.secret.targetColor = selectedColor.color;
@@ -202,8 +200,6 @@ export const Swatch: Game<SwatchState> = {
     },
 
     onEnd: (G, ctx) => {
-      console.log('turn end!');
-
       updateScores(G);
       currentRoundToPreviousRound(G);
       wipePlayerGuesses(G);
@@ -213,18 +209,15 @@ export const Swatch: Game<SwatchState> = {
       chooseColor: {
         moves: { 
           chooseColor: (G, ctx, color: Color) => {
-            console.log(`chosen color is ${JSON.stringify(color)}`);
             if (!ctx.playerID) {
               console.error('no player ID?');
               return;
             }
-            console.log(`recording color for ${ctx.playerID}`);
 
             G.players[ctx.playerID].selectedColor = color;
             if (!ctx.events) {
               throw new Error('no events API available');
             }
-            console.log(`activePlayers: ${JSON.stringify(ctx.activePlayers)}`);
             if (!ctx.activePlayers || Object.keys(ctx.activePlayers).length === 1) {
               ctx.events.endTurn();
             } else {
@@ -236,14 +229,13 @@ export const Swatch: Game<SwatchState> = {
     }
   },
 
-  endIf: (G, ctx): GameOver | undefined => {
+  endIf: (G, ctx): EndGameState | undefined => {
     if(!ctx.events) {
       return;
     }
     if (Object.keys(G.scores).some(
       (playerId) => G.scores[playerId] >= WINNING_SCORE)) {
         const gameOver = computeGameOver(G);
-        console.log({gameOver});
         return computeGameOver(G);
     }
     return undefined;

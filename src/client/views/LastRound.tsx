@@ -1,7 +1,7 @@
 import { Ctx, FilteredMetadata } from "boardgame.io"
-import { colorToCode } from "../game/Color";
-import { SwatchState } from "../game/Game"
-import { nameForPlayerId } from "../game/Player";
+import { colorToCode } from "../../game/Color";
+import { SwatchState } from "../../game/Game"
+import { nameForPlayerId } from "../../game/Player";
 
 
 export interface LastRoundProps {
