@@ -1,9 +1,8 @@
+body {
+    background-color: #FFFFEE;
+}
 .hidden {
     display: none;
-}
-
-.thisPlayer {
-    font-weight: bold;
 }
 
 .colorbox {
@@ -43,6 +42,10 @@ h3 {
 
 .playerScores div {
     margin-right: 8px;
+}
+
+.thisPlayer {
+    font-weight: bold;
 }
 
 .colorname {
@@ -143,4 +146,17 @@ h3 {
 .secondplace {
     border: solid 4px #9c9b9a;
     border-radius: 8px;
+}
+
+.gameOver {
+    border: solid 2px black;
+    border-radius: 8px;
+    margin: 8px;
+}
+
+.gameOver .victor {
+    font-size: 24pt;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 16px;
 }

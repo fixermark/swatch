@@ -49,7 +49,8 @@ export interface SwatchState {
   previousSeconds: PlayerID[];
 }
 
-const WINNING_SCORE = 3;
+/** Score to meet or exceed to win the game */
+const WINNING_SCORE = 10;
 
 /**
  * Update the scores. INVARIANT: Assumes all players have a guess logged
