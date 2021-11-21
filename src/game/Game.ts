@@ -101,7 +101,7 @@ function updateScores(state: SwatchState) {
 function computeGameOver(state: SwatchState): EndGameState {
   const passingScores = Object.keys(state.scores).map(
     (key) => ({score: state.scores[key], key: key}))
-  .sort((a, b) => a.score - b.score)
+  .sort((a, b) => b.score - a.score)
   .filter((playerScore) => playerScore.score >= WINNING_SCORE);
 
   const winningScores = passingScores.filter(
