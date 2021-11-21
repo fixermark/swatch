@@ -240,15 +240,12 @@ export const Swatch: Game<SwatchState> = {
     if(!ctx.events) {
       return;
     }
-    console.log('should I end?');
     if (Object.keys(G.scores).some(
       (playerId) => G.scores[playerId] >= WINNING_SCORE)) {
-        console.log('YES');
         const gameOver = computeGameOver(G);
         console.log({gameOver});
         return computeGameOver(G);
     }
-    console.log('no');
     return undefined;
   },
 };

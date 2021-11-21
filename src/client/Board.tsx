@@ -2,7 +2,7 @@ import React from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { SwatchState } from '../game/Game';
 import { Ctx } from 'boardgame.io';
-import { codeToColor } from '../game/Color';
+import {ColorChooser} from './controls/ColorChooser';
 import { LastRound } from './LastRound';
 import { nameForPlayerId, scoreForPlayer } from '../game/Player';
 
@@ -35,6 +35,9 @@ export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps
       <div className="gameview">
         <div className="direction">Guess the color for</div>
         <div className="colorname">{G.targetColorName}</div>
+        {
+          playerID && <ColorChooser state={G} context={ctx} moves={moves} playerId={playerID}/>
+        }
       </div>
       {matchData && <LastRound gameState={G} context={ctx} matchData={matchData} />}
     </main>
