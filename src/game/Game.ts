@@ -10,6 +10,14 @@ export interface PrivatePlayerState {
   selectedColor: Color | undefined,
 };
 
+/**
+ * Description of final game state
+ */
+interface GameOver {
+  winners: PlayerID[];
+  scores: {[key: PlayerID]: number};
+}
+
 interface PlayerGuesses {
   [key: PlayerID]: {
     guess: Color;
@@ -40,6 +48,8 @@ export interface SwatchState {
   previousFirsts: PlayerID[];
   previousSeconds: PlayerID[];
 }
+
+const WINNING_SCORE = 3;
 
 /**
  * Update the scores. INVARIANT: Assumes all players have a guess logged
@@ -80,6 +90,27 @@ function updateScores(state: SwatchState) {
     }
     state.previousSeconds = places[1].map((place) => place.id);
   }
+}
+
+/**
+ * Compute final game situation
+ * 
+ * @param state Game state. Invariant: at least one player score is over winning score
+ */
+function computeGameOver(state: SwatchState): GameOver {
+  const passingScores = Object.keys(state.scores).map(
+    (key) => ({score: state.scores[key], key: key}))
+  .sort((a, b) => a.score - b.score)
+  .filter((playerScore) => playerScore.score >= WINNING_SCORE);
+
+  const winningScores = passingScores.filter(
+    (playerScore) => playerScore.score === passingScores[0].score
+  );
+
+  return {
+    winners: winningScores.map((s) => s.key),
+    scores: state.scores,
+  };
 }
 
 /**
@@ -205,8 +236,20 @@ export const Swatch: Game<SwatchState> = {
     }
   },
 
-  // you will need this to end the game when someone gets to ten points
-  // endIf: (G, ctx) => {
-  // },
+  endIf: (G, ctx): GameOver | undefined => {
+    if(!ctx.events) {
+      return;
+    }
+    console.log('should I end?');
+    if (Object.keys(G.scores).some(
+      (playerId) => G.scores[playerId] >= WINNING_SCORE)) {
+        console.log('YES');
+        const gameOver = computeGameOver(G);
+        console.log({gameOver});
+        return computeGameOver(G);
+    }
+    console.log('no');
+    return undefined;
+  },
 };
 

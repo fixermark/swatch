@@ -19,10 +19,11 @@ const server = Server({
 // Build path relative to the server.js file
 const frontendJsPath = path.resolve(__dirname, '.');
 const frontendPublicPath = path.resolve(__dirname, '../public');
-server.app.use(async (ctx, next) => {
-    console.log(`requesting ${ctx.request.path}`);
-    await next();
-});
+// Debug handler to report on requests
+// server.app.use(async (ctx, next) => {
+//     console.log(`requesting ${ctx.request.path}`);
+//     await next();
+// });
 server.app.use(serve((frontendJsPath)));
 server.app.use(serve((frontendPublicPath)));
 
