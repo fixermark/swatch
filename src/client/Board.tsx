@@ -14,7 +14,7 @@ export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps
 
   return (
     <main className="gameview">
-      <h1>Swatch</h1>
+      <h1>Swătch</h1>
       { playerID !== null && 
         matchData && 
         !ctx.gameover &&
