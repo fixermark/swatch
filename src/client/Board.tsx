@@ -26,7 +26,7 @@ export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps
         <Scores state={G} matchData={matchData} thisPlayerId={playerID} /> 
         <div className="gameview">
           <div className="direction">Guess the color for</div>
-          <div className="colorname">{G.targetColorName}</div>
+          <div className="colorname">{G.public.targetColorName}</div>
           {
             playerID && <ColorChooser state={G} context={ctx} moves={moves} playerId={playerID}/>
           }

@@ -13,7 +13,7 @@ export interface GuessColorProps {
 export const ColorChooser = ({state, context, moves, playerId}: GuessColorProps) => {
     const [selectedColor, setSelectedColor] = React.useState<string>('#000000');
 
-    const colorSelected = context.activePlayers ? context.activePlayers[playerId] !== "chooseColor" : true;
+    const colorSelected = context.activePlayers ? context.activePlayers[playerId] !== "guessShade" : true;
     return <Fragment>
         <div><input className="guesscolor" type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}/></div>
         { colorSelected && <div>Color selected!</div>}

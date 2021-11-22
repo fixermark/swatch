@@ -19,7 +19,7 @@ export const LastRound = ({gameState, context, matchData}: LastRoundProps) => {
         return null;
     }
 
-    const previousRound = gameState.previousRound.guessColorShade!;
+    const previousRound = gameState.previousRound.data!;
     
     return <div className="lastroundblock">
         <h2>Last Round Results</h2>
@@ -29,7 +29,7 @@ export const LastRound = ({gameState, context, matchData}: LastRoundProps) => {
         <h3>Guesses</h3>
         <div className="lastroundrow">
         {
-            Object.keys(previousRound.players).map((id) => {
+            Object.keys(previousRound.guesses).map((id) => {
                 let addedClass = '';
                 if (gameState.previousFirsts.includes(id)) {
                     addedClass = 'firstplace';
@@ -38,7 +38,7 @@ export const LastRound = ({gameState, context, matchData}: LastRoundProps) => {
                 }
             return <div className={`playerGuess ${addedClass}`}>
                 <div className="playerName">{nameForPlayerId(id, matchData)}</div>
-                <div className="colorbox" style={{backgroundColor: `#${colorToCode(previousRound.players[id].guess)}`}} />
+                <div className="colorbox" style={{backgroundColor: `#${colorToCode(previousRound.guesses[id].guess)}`}} />
             </div>
             })
         }
