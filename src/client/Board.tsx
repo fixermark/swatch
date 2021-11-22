@@ -2,17 +2,13 @@ import React, { Fragment } from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { SwatchState } from '../game/Game';
 import { Ctx } from 'boardgame.io';
-import {ColorChooser} from './controls/ColorChooser';
-import { LastRound } from './views/LastRound';
-import { nameForPlayerId, scoreForPlayer } from '../game/Player';
 import { Scores } from './views/Scores';
 import { GameOver } from './views/GameOver';
-
-const getWinner = (ctx: Ctx): string | null => {
-  if (!ctx.gameover) return null;
-  if (ctx.gameover.draw) return 'Draw';
-  return `Player ${ctx.gameover.winner} wins!`;
-};
+import { GUESS_SHADE_ROUND_NAME } from '../game/rounds/GuessShadeRound';
+import { GuessShade } from './views/rounds/GuessShade';
+import { GUESS_NAME_ROUND_NAME } from '../game/rounds/GuessNameRound';
+import { GuessName } from './views/rounds/GuessName';
+import { LastRound } from './views/LastRound';
 
 export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps<SwatchState>) => {
 
@@ -23,14 +19,13 @@ export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps
         matchData && 
         !ctx.gameover &&
         <Fragment>
-        <Scores state={G} matchData={matchData} thisPlayerId={playerID} /> 
-        <div className="gameview">
-          <div className="direction">Guess the color for</div>
-          <div className="colorname">{G.public.targetColorName}</div>
-          {
-            playerID && <ColorChooser state={G} context={ctx} moves={moves} playerId={playerID}/>
-          }
-        </div>
+          <Scores state={G} matchData={matchData} thisPlayerId={playerID} /> 
+          <div>
+            {G.roundName === GUESS_SHADE_ROUND_NAME && 
+              <GuessShade state={G} context={ctx} moves={moves} playerId={playerID} />}
+            {G.roundName === GUESS_NAME_ROUND_NAME &&
+              <GuessName state={G} moves={moves} playerId={playerID} />}
+          </div>
         </Fragment>
       } 
       {ctx.gameover && matchData && playerID !== null && <GameOver 

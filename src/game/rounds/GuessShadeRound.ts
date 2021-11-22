@@ -1,8 +1,8 @@
 import { Ctx, PlayerID } from "boardgame.io";
-import { Color, distance } from "./Color";
-import { selectColor } from "./ColorSelector";
-import { SwatchState } from "./Game";
-import { privateStateGetter, publicStateGetter, Round, secretGetter } from "./Round";
+import { Color, distance } from "../Color";
+import { selectColor } from "../ColorSelector";
+import { SwatchState } from "../Game";
+import { lastRoundStateGetter, privateStateGetter, publicStateGetter, Round, secretGetter } from "./Round";
 
 export const GUESS_SHADE_ROUND_NAME = 'guessShade';
 
@@ -41,7 +41,7 @@ const getPrivatePlayerState = privateStateGetter<GuessShadePrivatePlayerState>(G
 const getPublicState = publicStateGetter<GuessShadePublicState>(GUESS_SHADE_ROUND_NAME);
 
 
-export const GuessShadeRound: Round = {
+export const GuessShadeRound: Round<GuessShadePrivatePlayerState, GuessShadePublicState, GuessShadePreviousRoundState> = {
     name: GUESS_SHADE_ROUND_NAME,
     initState: (G: SwatchState, ctx: Ctx) => {
         G.secret = {
@@ -157,5 +157,8 @@ export const GuessShadeRound: Round = {
               ctx.events.endStage();
             }
         },
-    }
+    },
+    getPlayerState: getPrivatePlayerState,
+    getPublicState: getPublicState,
+    getLastRoundState: lastRoundStateGetter<GuessShadePreviousRoundState>(GUESS_SHADE_ROUND_NAME),
 };

@@ -4,11 +4,14 @@ import { codeToColor, Color, colorToCode } from "./Color";
 export interface SelectedColor {
     name: string;
     color: Color;
+    nearby: string[];
 }
 
 interface ColorRow {
     name: string;
     color: string;
+    nearby: number[];
+
 }
 
 // have to set up the colors; call this during module load
@@ -66,5 +69,6 @@ export function selectColor(rand: RandomAPI): SelectedColor | undefined {
     return {
         name: selectedColor.name,
         color: color,
+        nearby: selectedColor.nearby.map((idx) => ALL_COLORS[idx].name),
     };
 }

@@ -1,8 +1,9 @@
-import { Ctx, FilteredMetadata } from "boardgame.io"
-import { colorToCode } from "../../game/Color";
-import { SwatchState } from "../../game/Game"
-import { nameForPlayerId } from "../../game/Player";
-
+import { Ctx, FilteredMetadata } from "boardgame.io";
+import { SwatchState } from "../../game/Game";
+import { GUESS_NAME_ROUND_NAME } from "../../game/rounds/GuessNameRound";
+import { GUESS_SHADE_ROUND_NAME } from "../../game/rounds/GuessShadeRound";
+import { GuessNameLastRound } from "./lastrounds/GuessNameLastRound";
+import { GuessShadeLastRound } from "./lastrounds/GuessShadeLastRound";
 
 export interface LastRoundProps {
     gameState: SwatchState;
@@ -10,38 +11,17 @@ export interface LastRoundProps {
     matchData: FilteredMetadata;
 }
 
-/**  
- * Rendering the last round of play 
- */
-
 export const LastRound = ({gameState, context, matchData}: LastRoundProps) => {
     if (!gameState.previousRound) {
         return null;
     }
 
-    const previousRound = gameState.previousRound.data!;
-    
-    return <div className="lastroundblock">
-        <h2>Last Round Results</h2>
-        <h3>Color</h3>
-        <p className="lastroundcolorname">{previousRound.colorName}</p>
-        <div className="colorbox" style={{backgroundColor: `#${colorToCode(previousRound.colorValue)}`}} />
-        <h3>Guesses</h3>
-        <div className="lastroundrow">
-        {
-            Object.keys(previousRound.guesses).map((id) => {
-                let addedClass = '';
-                if (gameState.previousFirsts.includes(id)) {
-                    addedClass = 'firstplace';
-                } else if (gameState.previousSeconds.includes(id)) {
-                    addedClass = 'secondplace';
-                }
-            return <div className={`playerGuess ${addedClass}`}>
-                <div className="playerName">{nameForPlayerId(id, matchData)}</div>
-                <div className="colorbox" style={{backgroundColor: `#${colorToCode(previousRound.guesses[id].guess)}`}} />
-            </div>
-            })
-        }
-        </div>
-    </div>;
+    if (gameState.previousRound.name === GUESS_SHADE_ROUND_NAME) {
+        return <GuessShadeLastRound gameState={gameState} context={context} matchData={matchData} />
+    }
+    if (gameState.previousRound.name === GUESS_NAME_ROUND_NAME) {
+        return <GuessNameLastRound gameState={gameState} context={context} matchData={matchData} />
+    }
+    // unknown last round type
+    return null;
 }

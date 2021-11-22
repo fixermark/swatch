@@ -1,7 +1,8 @@
 import { Ctx, Game, PlayerID, StageMap } from 'boardgame.io';
 import { PlayerView } from 'boardgame.io/core';
-import { GuessShadeRound, GUESS_SHADE_ROUND_NAME } from './GuessShadeRound';
-import { PreviousRoundState, PrivatePlayerState, PublicState, ROUNDS, Secrets } from './Rounds';
+import { GuessNameRound } from './rounds/GuessNameRound';
+import { GuessShadeRound, GUESS_SHADE_ROUND_NAME } from './rounds/GuessShadeRound';
+import { PreviousRoundState, PrivatePlayerState, PublicState, ROUNDS, Secrets } from './rounds/Rounds';
 
 /**
  * Description of final game state
@@ -97,13 +98,21 @@ export const Swatch: Game<SwatchState> = {
   },
 
   turn: {
-    activePlayers: {all: 'guessShade', minMoves: 1, maxMoves: 1},
     onBegin: (G, ctx) => {
-      if (!G.secret || !ctx.random) {
+      if (!G.secret || !ctx.random || !ctx.events) {
         return;
       }
-      G.roundName = GuessShadeRound.name;
+      // choose next round
+      const nextRound = ctx.random.Shuffle(Object.keys(ROUNDS))[0];
+
+      G.roundName = nextRound;
+      ROUNDS[G.roundName].initState(G, ctx);
       ROUNDS[G.roundName].onBegin(G, ctx);
+
+      ctx.events.setActivePlayers({all: nextRound,
+        minMoves: 1,
+        maxMoves: 1,
+      });
     },
 
     onEnd: (G, ctx) => {
