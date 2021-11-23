@@ -104,6 +104,7 @@ export const Swatch: Game<SwatchState> = {
       }
       // choose next round
       const nextRound = ctx.random.Shuffle(Object.keys(ROUNDS))[0];
+      //const nextRound = GUESS_SHADE_ROUND_NAME;
 
       G.roundName = nextRound;
       ROUNDS[G.roundName].initState(G, ctx);
