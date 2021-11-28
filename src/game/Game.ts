@@ -30,7 +30,7 @@ export interface SwatchState {
 }
 
 /** Score to meet or exceed to win the game */
-const WINNING_SCORE = 10;
+const WINNING_SCORE = 15;
 
 /**
  * Compute final game situation
