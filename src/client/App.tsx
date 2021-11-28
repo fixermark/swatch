@@ -1,4 +1,4 @@
-import { Debug } from 'boardgame.io/debug';
+//import { Debug } from 'boardgame.io/debug';
 import { Client, Lobby } from 'boardgame.io/react';
 import { SocketIO } from 'boardgame.io/multiplayer';
 import { Swatch } from '../game/Game';
