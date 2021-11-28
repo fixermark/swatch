@@ -189,6 +189,29 @@ h3 {
     border-radius: 8px;
 }
 
+.guessMadeUpNameTable {
+    margin-bottom: 6px;
+}
+
+.guessMadeUpNameTable .playerNameColumn {
+    text-align: right;
+}
+
+.guessMadeUpNameTable .colorNameColumn {
+    text-align: left;
+    font-weight: bold;
+}
+
+.guessMadeUpNameTable .guesses {
+    padding-left: 16px;
+    text-align: left;
+}
+
+.correctGuesses {
+    padding-right: 1em;
+}
+
+
 .gameOver {
     border: solid 2px black;
     border-radius: 8px;

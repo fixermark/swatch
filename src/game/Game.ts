@@ -2,7 +2,8 @@ import { Ctx, Game, PlayerID, StageMap } from 'boardgame.io';
 import { PlayerView } from 'boardgame.io/core';
 import { GuessNameRound } from './rounds/GuessNameRound';
 import { GuessShadeRound, GUESS_SHADE_ROUND_NAME } from './rounds/GuessShadeRound';
-import { PreviousRoundState, PrivatePlayerState, PublicState, ROUNDS, Secrets } from './rounds/Rounds';
+import { MAKE_UP_NAME_ROUND_NAME } from './rounds/MakeUpNameRound';
+import { NEXT_ROUND_OPTIONS, PreviousRoundState, PrivatePlayerState, PublicState, ROUNDS, Secrets } from './rounds/Rounds';
 
 /**
  * Description of final game state
@@ -66,6 +67,8 @@ console.log(`STAGES is ${JSON.stringify(STAGES)}`);
 
 export const Swatch: Game<SwatchState> = {
   name: 'swatch',
+  minPlayers: 1,
+  maxPlayers: 8,
   // automatically limit player state by stripping 'secret' and all 'player.id' but the current player
   playerView: PlayerView.STRIP_SECRETS,
   setup: (ctx) => {
@@ -103,8 +106,8 @@ export const Swatch: Game<SwatchState> = {
         return;
       }
       // choose next round
-      const nextRound = ctx.random.Shuffle(Object.keys(ROUNDS))[0];
-      //const nextRound = GUESS_SHADE_ROUND_NAME;
+      const nextRound = ctx.random.Shuffle(NEXT_ROUND_OPTIONS)[0];
+      //const nextRound = MAKE_UP_NAME_ROUND_NAME;
 
       G.roundName = nextRound;
       ROUNDS[G.roundName].initState(G, ctx);

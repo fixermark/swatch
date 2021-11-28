@@ -1,17 +1,16 @@
-import { Ctx } from "boardgame.io";
 import { colorToCode } from "../../../game/Color";
 import { SwatchState } from "../../../game/Game";
-import { GuessNameRound } from "../../../game/rounds/GuessNameRound";
+import { GuessMadeUpNameRound } from "../../../game/rounds/GuessMadeUpNameRound";
 
-export interface GuessNameProps {
+export interface GuessMadeUpNameProps {
     state: SwatchState;
     moves: Record<string, (...args: any[]) => void>;
     playerId: string;
 }
 
-export const GuessName = ({state, moves, playerId}: GuessNameProps) => {
-    const publicState = GuessNameRound.getPublicState(state);
-    const playerState = GuessNameRound.getPlayerState(state);
+export const GuessMadeUpName = ({state, moves, playerId}: GuessMadeUpNameProps) => {
+    const publicState = GuessMadeUpNameRound.getPublicState(state);
+    const playerState = GuessMadeUpNameRound.getPlayerState(state);
 
     const guessedName = playerState[playerId].selectedName;
 

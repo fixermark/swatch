@@ -9,6 +9,10 @@ import { GuessShade } from './views/rounds/GuessShade';
 import { GUESS_NAME_ROUND_NAME } from '../game/rounds/GuessNameRound';
 import { GuessName } from './views/rounds/GuessName';
 import { LastRound } from './views/LastRound';
+import { MAKE_UP_NAME_ROUND_NAME } from '../game/rounds/MakeUpNameRound';
+import { MakeUpName } from './views/rounds/MakeUpName';
+import { GUESS_MADE_UP_NAME_ROUND_NAME } from '../game/rounds/GuessMadeUpNameRound';
+import { GuessMadeUpName } from './views/rounds/GuessMadeUpName';
 
 export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps<SwatchState>) => {
 
@@ -25,6 +29,10 @@ export const Board = ({ G, ctx, moves, events, playerID, matchData }: BoardProps
               <GuessShade state={G} context={ctx} moves={moves} playerId={playerID} />}
             {G.roundName === GUESS_NAME_ROUND_NAME &&
               <GuessName state={G} moves={moves} playerId={playerID} />}
+            {G.roundName === MAKE_UP_NAME_ROUND_NAME &&
+              <MakeUpName state={G} moves={moves} playerId={playerID} />}
+            {G.roundName === GUESS_MADE_UP_NAME_ROUND_NAME &&
+              <GuessMadeUpName state={G} moves={moves} playerId={playerID} />}
           </div>
         </Fragment>
       } 
