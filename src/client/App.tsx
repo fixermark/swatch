@@ -13,9 +13,9 @@ const SERVER_URI = window.location.hostname === 'localhost' ? 'http://localhost:
 export const App = () => {
     const [playerId, setPlayerId] = useState<string|null>(null);
 
+    // NOTE: to re-enabled debugging, add `debug={{impl: Debug}}` property
     // TODO: we may want to check state here and if we already know our player ID etc. just hop in the game?
     return <Lobby
-        debug={{impl: Debug}}
         gameServer={SERVER_URI}
         lobbyServer={SERVER_URI}
         gameComponents={[
