@@ -1,7 +1,7 @@
 {
   "name": "swatch-fixermark",
   "version": "0.1.0",
-  "description": "",
+  "description": "A color-matching client-server game",
   "main": "src/server/main.ts",
   "scripts": {
     "build-client": "webpack",
@@ -12,8 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Mark T. Tomczak",
+  "license": "MIT",
   "devDependencies": {
     "@types/koa-static": "^4.0.2",
     "@types/node": "^12.20.37",
