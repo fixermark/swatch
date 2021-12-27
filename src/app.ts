@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { FlatFile, Server, Origins } from 'boardgame.io/server';
 import path from 'path';
 import serve from 'koa-static';

@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { Ctx, PlayerID } from "boardgame.io"
 import React, { Fragment } from "react";
 import { codeToColor, Color, colorToCode } from "../../game/Color";

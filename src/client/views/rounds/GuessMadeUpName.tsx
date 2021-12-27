@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { colorToCode } from "../../../game/Color";
 import { SwatchState } from "../../../game/Game";
 import { GuessMadeUpNameRound } from "../../../game/rounds/GuessMadeUpNameRound";

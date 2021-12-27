@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { Ctx, FilteredMetadata } from "boardgame.io";
 import { SwatchState } from "../../game/Game";
 import { GUESS_MADE_UP_NAME_ROUND_NAME } from "../../game/rounds/GuessMadeUpNameRound";

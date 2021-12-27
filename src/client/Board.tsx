@@ -1,7 +1,11 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import React, { Fragment } from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { SwatchState } from '../game/Game';
-import { Ctx } from 'boardgame.io';
 import { Scores } from './views/Scores';
 import { GameOver } from './views/GameOver';
 import { GUESS_SHADE_ROUND_NAME } from '../game/rounds/GuessShadeRound';

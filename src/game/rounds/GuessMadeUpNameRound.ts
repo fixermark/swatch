@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { PlayerID } from "boardgame.io";
 import { Color } from "../Color";
 import { MakeUpNamePrivatePlayerState, MakeUpNamePublicState, MakeUpNameSecret, MAKE_UP_NAME_ROUND_NAME } from "./MakeUpNameRound";

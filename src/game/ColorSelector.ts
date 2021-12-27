@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { RandomAPI } from "boardgame.io/dist/types/src/plugins/random/random";
 import { codeToColor, Color, colorToCode } from "./Color";
 

@@ -1,8 +1,11 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { Ctx, Game, PlayerID, StageMap } from 'boardgame.io';
 import { PlayerView } from 'boardgame.io/core';
-import { GuessNameRound } from './rounds/GuessNameRound';
-import { GuessShadeRound, GUESS_SHADE_ROUND_NAME } from './rounds/GuessShadeRound';
-import { MAKE_UP_NAME_ROUND_NAME } from './rounds/MakeUpNameRound';
+import { GUESS_SHADE_ROUND_NAME } from './rounds/GuessShadeRound';
 import { NEXT_ROUND_OPTIONS, PreviousRoundState, PrivatePlayerState, PublicState, ROUNDS, Secrets } from './rounds/Rounds';
 
 /**

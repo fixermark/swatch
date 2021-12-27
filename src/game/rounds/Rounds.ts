@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { GuessMadeUpNamePreviousRoundState, GuessMadeUpNamePrivatePlayerState, GuessMadeUpNamePublicState, GuessMadeUpNameRound } from "./GuessMadeUpNameRound";
 import { GuessNamePreviousRoundState, GuessNamePrivatePlayerState, GuessNamePublicState, GuessNameRound, GuessNameSecret } from "./GuessNameRound";
 import { GuessShadePreviousRoundState, GuessShadePrivatePlayerState, GuessShadePublicState, GuessShadeRound, GuessShadeSecret } from "./GuessShadeRound";

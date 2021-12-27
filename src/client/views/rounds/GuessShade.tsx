@@ -1,8 +1,12 @@
-import { Ctx, MoveMap } from "boardgame.io";
-import React, { Fragment } from "react";
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
+import { Ctx } from "boardgame.io";
+import React from "react";
 import { SwatchState } from "../../../game/Game";
-import { GuessShadeRound, GUESS_SHADE_ROUND_NAME } from "../../../game/rounds/GuessShadeRound";
-import { ROUNDS } from "../../../game/rounds/Rounds";
+import { GuessShadeRound } from "../../../game/rounds/GuessShadeRound";
 import { ColorChooser } from "../../controls/ColorChooser";
 
 export interface GuessShadeProps {

@@ -1,6 +1,9 @@
-//import { Debug } from 'boardgame.io/debug';
-import { Client, Lobby } from 'boardgame.io/react';
-import { SocketIO } from 'boardgame.io/multiplayer';
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
+import { Lobby } from 'boardgame.io/react';
 import { Swatch } from '../game/Game';
 import { Board } from './Board';
 import { useState } from 'react';

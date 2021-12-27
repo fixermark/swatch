@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 Mark T. Tomczak
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
 import { INVALID_MOVE } from "boardgame.io/core";
 import { Color } from "../Color";
 import { selectColor } from "../ColorSelector";
