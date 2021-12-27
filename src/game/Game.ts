@@ -70,7 +70,7 @@ console.log(`STAGES is ${JSON.stringify(STAGES)}`);
 
 export const Swatch: Game<SwatchState> = {
   name: 'swatch',
-  minPlayers: 1,
+  minPlayers: 2,
   maxPlayers: 8,
   // automatically limit player state by stripping 'secret' and all 'player.id' but the current player
   playerView: PlayerView.STRIP_SECRETS,
