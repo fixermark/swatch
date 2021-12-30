@@ -7,8 +7,7 @@
   "scripts": {
     "build-client": "webpack",
     "build-server": "tsc -p tsconfig.server.json",
-    "build": "tsc -p tsconfig.server.json",
-    "postinstall": "tsc -p tsconfig.server.json",
+    "build": "npm run build-server && npm run build-client",
     "start": "npm run build-server && npm run build-client && node build/app.js",
     "upload-to-dev": "./upload-to-dev.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
