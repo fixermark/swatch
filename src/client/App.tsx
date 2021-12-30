@@ -11,7 +11,7 @@ import 'react';
 
 console.log(window.location.hostname);
 const HOST = window.location.hostname === 'localhost' ? 'localhost:8000' : window.location.hostname;
-const SERVER_URI = window.location.hostname === 'localhost' ? 'http://localhost:8000' : `http://${window.location.hostname}:${window.location.port}`;
+const SERVER_URI = window.location.hostname === 'localhost' ? 'http://localhost:8000' : `${window.location.protocol}://${window.location.hostname}:${window.location.port}`;
 
 export const App = () => {
     const [playerId, setPlayerId] = useState<string|null>(null);
