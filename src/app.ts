@@ -6,6 +6,7 @@
 import { FlatFile, Server, Origins } from 'boardgame.io/server';
 import path from 'path';
 import serve from 'koa-static';
+import 'process';
 import { Swatch } from './game/Game';
 
 const server = Server({
@@ -17,6 +18,8 @@ const server = Server({
      origins: [
          'http://swatch-dev.fixermark.com',
          'http://swatch.fixermark.com',
+         'https://swatchgame-dev.herokuapp.com',
+         'https://swatchgame.herokuapp.com',
          Origins.LOCALHOST_IN_DEVELOPMENT,
          Origins.LOCALHOST,
      ],
@@ -32,6 +35,10 @@ const frontendPublicPath = path.resolve(__dirname, '../public');
 server.app.use(serve((frontendJsPath)));
 server.app.use(serve((frontendPublicPath)));
 
-server.run(8000, () => {
+const MAYBE_PORT = Number(process.env.PORT);
+
+const PORT = isNaN(MAYBE_PORT) ? 8000 : MAYBE_PORT;
+
+server.run(PORT, () => {
     console.log('server on');
 });
